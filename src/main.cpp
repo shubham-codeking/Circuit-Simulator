@@ -2,9 +2,9 @@
 #include "ohms_law.h"
 using namespace std;
 
-bool zero_check(int quantity1, int quantity2){
-    if (quantity1==0||quantity2==0){
-        cout<<"\nCan't be zeron"<<endl<<endl;
+bool zeroDivisionCheck(const double &quantity){
+    if (quantity==0){
+        cout<<"\nCan't be zero!"<<endl<<endl;
         return true;
     }
     else{
@@ -39,7 +39,7 @@ void run(){
             cin>>voltage;
             cout<<"Current: ";
             cin>>current;
-            if(zero_check(voltage,current)){
+            if(zeroDivisionCheck(current)){
                 break;
             }
             resistance=calcResistance(voltage, current);
@@ -50,9 +50,6 @@ void run(){
             cin>>current;
             cout<<"Resistance: ";
             cin>>resistance;
-            if(zero_check(resistance,current)){
-                break;
-            }
             voltage=calcVoltage(current, resistance);
             cout<<endl<<"Voltage = "<<voltage<<endl<<endl;
             break;
@@ -61,7 +58,7 @@ void run(){
             cin>>voltage;
             cout<<"Resistance: ";
             cin>>resistance;
-            if(zero_check(voltage,resistance)){
+            if(zeroDivisionCheck(resistance)){
                 break;
             }
             current=calcCurrent(voltage, resistance);
