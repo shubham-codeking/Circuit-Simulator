@@ -1,4 +1,4 @@
-#include <ohms_law.h>
+#include "ohms_law.h"
 
 double calcResistance(double voltage, double current){
     return (voltage/current);
@@ -11,4 +11,3 @@ double calcCurrent(double voltage, double resistance){
 double calcVoltage(double current, double resistance){
     return (current*resistance);
 }
-
