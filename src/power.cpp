@@ -7,5 +7,5 @@ double calcPowerVI(const double &voltage, const double &current){
     return (voltage*current);
 }
 double calcPowerIR(const double &current, const double &resistance){
-    return (current*resistance*resistance);
+    return (current*current*resistance);
 }

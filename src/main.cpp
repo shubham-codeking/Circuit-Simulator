@@ -1,6 +1,7 @@
 #include <iostream>
 #include "ohms_law.h"
 #include "menus.h"
+#include "power.h"
 using namespace std;
 
 bool zeroDivisionCheck(const double &quantity){
@@ -55,6 +56,40 @@ void ohmsLawCalculation(const int &choice){
 }
 
 void powerCalculation(const int &choice){
+    double power, current, voltage, resistance;
+    switch(choice)
+    {
+    case 1:
+        cout<<"Current: ";
+        cin>>current;
+        cout<<"Resistance: ";
+        cin>>resistance;
+        power = calcPowerIR(current, resistance);
+        break;
+    case 2:
+        cout<<"Current: ";
+        cin>>current;
+        cout<<"Voltage: ";
+        cin>>voltage;
+        power = calcPowerVI(voltage, current);
+        break;
+    case 3:
+        cout<<"Voltage: ";
+        cin>>voltage;
+        cout<<"Resistance: ";
+        cin>>resistance;
+        if (zeroDivisionCheck(resistance)){
+            return;
+        }
+        power = calcPowerVR(voltage, resistance);
+        break;
+    case 4:
+        return;
+    default:
+        cout<<"Enter valid option!!\n\n";
+        return;
+    }
+    cout<<"\nPower = "<<power<<endl<<endl;
     return;
 }
 
