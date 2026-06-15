@@ -96,7 +96,24 @@ void powerCalculation(const int &choice){
 }
 
 void resistanceCalculation(const int &choice){
-    return;
+    vector<double> resistors;
+    double netResistance;
+    switch(choice){
+        case 1:
+            resistors=inputResistance();
+            netResistance=seriesResistance(resistors);
+            break;
+        case 2:
+            resistors=inputResistance();
+            netResistance=parallelResistance(resistors);
+            break;
+        case 3:
+            return;
+        default:
+            cout<<"Enter valid option!!"<<endl<<endl;
+            return;
+    }
+    cout<<"\nNet resistance = "<<netResistance<<endl<<endl;
 }
 
 void run(){

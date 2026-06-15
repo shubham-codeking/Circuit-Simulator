@@ -34,6 +34,8 @@ double parallelResistance(const vector<double> &resistors){
     for(int i=0;i<resistors.size();i++){
             parallelSum+=1/resistors[i];
     }
-    parallelSum = 1/parallelSum;
+    if(parallelSum!=0){
+        parallelSum = 1/parallelSum;
+    }
     return parallelSum;
 }
