@@ -3,7 +3,6 @@
 Resistor::Resistor(double value){
     resistance = value;
 }
-
-double Resistor::getResistance(){
+double Resistor::getResistance() const{
     return resistance;
 }

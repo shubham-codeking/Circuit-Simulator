@@ -1,6 +1,7 @@
 #include <vector>
+#include "resistors.h"
 using namespace std;
 
-vector<double> inputResistance();
-double seriesResistance(const vector<double> &resistors);
-double parallelResistance(const vector<double> &resistors);
+vector<Resistor> inputResistance();
+Resistor seriesResistance(const vector<Resistor> &resistors);
+Resistor parallelResistance(const vector<Resistor> &resistors);
