@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include "resistors.h"
 #include "resistance.h"
 #include "ohms_law.h"
 #include "menus.h"
