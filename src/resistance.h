@@ -5,3 +5,4 @@ using namespace std;
 vector<Resistor> inputResistance();
 Resistor seriesResistance(const vector<Resistor> &resistors);
 Resistor parallelResistance(const vector<Resistor> &resistors);
+void resistanceCalculation(const int &choice);

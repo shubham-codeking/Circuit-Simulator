@@ -40,3 +40,28 @@ Resistor parallelResistance(const vector<Resistor> &resistors){
     }
     return Resistor(parallelSum);
 }
+
+void resistanceCalculation(const int &choice){
+    vector<Resistor> resistors;
+    Resistor netResistance(0);
+    switch(choice){
+        case 1:{
+            resistors=inputResistance();
+            netResistance=seriesResistance(resistors);
+            break;
+        }
+        case 2:{
+            resistors=inputResistance();
+            netResistance=parallelResistance(resistors);
+            break;
+        }
+        case 3:{
+            return;
+        }
+        default:{
+            cout<<"Enter valid option!!"<<endl<<endl;
+            return;
+        }
+    }
+    cout<<"\nNet resistance = "<<netResistance.getResistance()<<endl<<endl;
+}
