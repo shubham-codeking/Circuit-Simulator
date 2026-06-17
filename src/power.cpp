@@ -24,7 +24,7 @@ void powerCalculation(const int &choice){
             if (zeroDivisionCheck(resistance)){
                 return;
             }
-            Resistor R(resistance);
+            Resistor R("R", resistance);
             power = calcPowerIR(current, R.getResistance());
             break;
         }
@@ -44,7 +44,7 @@ void powerCalculation(const int &choice){
             if (zeroDivisionCheck(resistance)){
                 return;
             }
-            Resistor R(resistance);
+            Resistor R("R", resistance);
             power = calcPowerVR(voltage, R.getResistance());
             break;
         }

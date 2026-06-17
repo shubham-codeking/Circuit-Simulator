@@ -40,7 +40,7 @@ void ohmsLawCalculation(const int &choice){
         if(zeroDivisionCheck(resistance)){
             break;
         }
-        Resistor R(resistance);
+        Resistor R("R", resistance);
         voltage=calcVoltage(current, R.getResistance());
         cout<<endl<<"Voltage = "<<voltage<<endl<<endl;
         break;
@@ -53,7 +53,7 @@ void ohmsLawCalculation(const int &choice){
         if(zeroDivisionCheck(resistance)){
             break;
         }
-        Resistor R(resistance);
+        Resistor R("R", resistance);
         current=calcCurrent(voltage, R.getResistance());
         cout<<endl<<"Current = "<<current<<endl<<endl;
         break;

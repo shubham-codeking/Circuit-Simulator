@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include "resistors.h"
 using namespace std;
 
@@ -17,7 +18,8 @@ vector<Resistor> inputResistance(){
             cout<<"\nResistance cannot be negative or zero."<<endl;
             return resistors = {};
         }
-        resistors.push_back(Resistor(tempResistance));
+        string name = "R"+char(i);
+        resistors.push_back(Resistor(name,tempResistance));
     }
     return resistors;
 }
@@ -27,7 +29,7 @@ Resistor seriesResistance(const vector<Resistor> &resistors){
     for(int i=0;i<resistors.size();i++){
         seriesSum += resistors[i].getResistance();
     }
-    return Resistor(seriesSum);
+    return Resistor("Rs", seriesSum);
 }
 
 Resistor parallelResistance(const vector<Resistor> &resistors){
@@ -38,12 +40,12 @@ Resistor parallelResistance(const vector<Resistor> &resistors){
     if(parallelSum!=0){
         parallelSum = 1/parallelSum;
     }
-    return Resistor(parallelSum);
+    return Resistor("Rp", parallelSum);
 }
 
 void resistanceCalculation(const int &choice){
     vector<Resistor> resistors;
-    Resistor netResistance(0);
+    Resistor netResistance("Net_R",0);
     switch(choice){
         case 1:{
             resistors=inputResistance();
