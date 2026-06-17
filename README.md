@@ -6,7 +6,7 @@ The long-term goal is to evolve this project from a simple calculator into a mor
 
 ## Current Version
 
-v2.0 – Circuit Fundamentals Calculator
+v3.0 – Circuit Fundamentals Calculator With Component-Based Architecture
 
 ### Features
 
@@ -44,7 +44,13 @@ src/
 ├── power.h
 │
 ├── resistance.cpp
-└── resistance.h
+├── resistance.h
+│
+├── resistors.cpp
+├── resistors.h
+│
+├── utilities.cpp
+└── utilities.h
 
 ## Concepts Practiced
 
@@ -56,6 +62,7 @@ src/
 - Git
 - GitHub
 - Version Tags
+- OOPs
 
 ## Building the Project
 
@@ -69,7 +76,7 @@ Run:
 
 - [x] V1 - Ohm's Law Calculator
 - [x] V2 - Circuit Fundamentals Calculator
-- [ ] V3 - Component-Based Architecture
+- [x] V3 - Component-Based Architecture
 - [ ] V4 - Circuit Builder
 - [ ] V5 - RC Circuit Simulation
 - [ ] V6 - GUI Interface
@@ -84,7 +91,6 @@ This project serves as a long-term learning project for:
 - C++
 - Software Engineering
 - Git & GitHub
-- Electronics
 - Project Architecture
 
 Rather than building many small projects, the goal is to continuously expand a single project and learn how software evolves over time.
