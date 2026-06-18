@@ -15,6 +15,48 @@ bool zeroDivisionCheck(const double &quantity){
     }
 }
 
+bool expressionValidator(const string &expression){
+    char operatorArray[] = {')','(','+','|'};
+    
+    if(expression.find("()")!=string::npos){
+        return false;
+    }
+
+    for(int i=0;i<expression.length();i++){
+        bool skip = false;
+        if(isalnum(expression[i])||expression[i]==' '){
+            continue;
+        }
+        for(char a: operatorArray){
+            if(expression[i]==a){
+                skip = true;
+                break;
+            }
+        }
+        if (skip){continue;}
+        return false;
+    }
+
+    int parenthesisCount = 0;
+    for(int i=0;i<expression.length();i++){
+        if(expression[i]=='('){
+            parenthesisCount += 1;
+        }
+        else if(expression[i]==')'){
+            parenthesisCount -= 1;
+        }
+        if(parenthesisCount<0){
+            return false;
+        }
+    }
+    if(parenthesisCount!=0){
+        return false;
+    }
+
+    return true;
+}
+
+
 vector<string> tokenizer(string &expression){
     expression = "("+expression+")";
     string element = "";
