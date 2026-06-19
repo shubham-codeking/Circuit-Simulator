@@ -48,10 +48,13 @@ bool expressionValidator(const string &expression){
         if(parenthesisCount<0){
             return false;
         }
+
     }
     if(parenthesisCount!=0){
         return false;
     }
+
+
 
     return true;
 }
@@ -60,12 +63,30 @@ bool expressionValidator(const string &expression){
 vector<string> tokenizer(string &expression){
     expression = "("+expression+")";
     string element = "";
-    bool state = true;
+    bool state = true, parallelState = true;
     vector<string> tokenArray = {};
     vector<char> operatorArray = {'(',')','+'};
     for(int i=0; i<expression.length(); i++){
         if(state){
             element="";
+        }
+        if(!parallelState&&expression[i]!='|'){
+            tokenArray={};
+            return tokenArray;
+        }
+        if(expression[i]=='|'){
+            if(parallelState){
+                parallelState = false;
+            }
+            else{
+                tokenArray.push_back("||");
+                parallelState = true;
+            }
+            if(!state){
+                tokenArray.push_back(element);
+                state=true;
+            }
+            continue;
         }
         for(char op: operatorArray){
             if(expression[i]==op){
@@ -85,23 +106,10 @@ vector<string> tokenizer(string &expression){
             }
             continue;
         }
-        else if(expression[i]=='|'){
-            if(state){
-                element+=expression[i];
-                state = false;
-            }
-            else{
-                if(element=="|"){
-                    tokenArray.push_back("||");
-                    state = true;
-                }
-                else{
-                    tokenArray.push_back(element);
-                    element="";
-                    element+=expression[i];
-                }
-            }
-        }
+    }
+    if(!parallelState){
+        tokenArray={};
+        return tokenArray;
     }
     return tokenArray;
 }
