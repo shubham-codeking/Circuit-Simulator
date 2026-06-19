@@ -15,13 +15,25 @@ bool zeroDivisionCheck(const double &quantity){
     }
 }
 
+static bool isOperator(const string &token){
+    if(token=="+"||token=="||"){
+        return true;
+    }
+    return false;
+}
+
+static bool isOperand(const string &token){
+    if(token!="("&&token!=")"&&!isOperator(token)){
+        return true;
+    }
+    return false;
+}
+
 bool expressionValidator(const string &expression){
     char operatorArray[] = {')','(','+','|'};
-    
     if(expression.find("()")!=string::npos){
         return false;
     }
-
     for(int i=0;i<expression.length();i++){
         bool skip = false;
         if(isalnum(expression[i])||expression[i]==' '){
@@ -36,7 +48,6 @@ bool expressionValidator(const string &expression){
         if (skip){continue;}
         return false;
     }
-
     int parenthesisCount = 0;
     for(int i=0;i<expression.length();i++){
         if(expression[i]=='('){
@@ -48,14 +59,10 @@ bool expressionValidator(const string &expression){
         if(parenthesisCount<0){
             return false;
         }
-
     }
     if(parenthesisCount!=0){
         return false;
     }
-
-
-
     return true;
 }
 
@@ -112,4 +119,25 @@ vector<string> tokenizer(string &expression){
         return tokenArray;
     }
     return tokenArray;
+}
+
+
+bool tokenValidator(const vector<string> &tokens){
+    string past = tokens[0];
+    for(string current: tokens){
+        if(current=="("&&(past==")"||isOperand(past))){
+            return false;    
+        }
+        else if(current==")"&&isOperator(past)){
+            return false;
+        }
+        else if(isOperator(current)&&(past=="("||isOperator(past))){
+            return false;
+        }
+        else if(isOperand(current)&&past==")"){
+            return false;
+        }
+        past=current;
+    }
+    return true;
 }
