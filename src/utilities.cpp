@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <cctype>
+#include <stack>
 using namespace std;
 
 bool zeroDivisionCheck(const double &quantity){
@@ -27,6 +28,12 @@ static bool isOperand(const string &token){
         return true;
     }
     return false;
+}
+
+static int operatorPrecedence(const string &token){
+    if(token=="||") return 2;
+    if(token=="+") return 1;
+    return 0;
 }
 
 bool expressionValidator(const string &expression){
@@ -140,4 +147,34 @@ bool tokenValidator(const vector<string> &tokens){
         past=current;
     }
     return true;
+}
+
+vector<string> infixToPostfix(const vector<string> &tokens){
+    vector<string> postfixTokens;
+    stack<string> operators;
+    for(string token:tokens){
+        if(token=="(") operators.push(token);
+        else if(isOperand(token)) postfixTokens.push_back(token);
+        else if(token==")"){
+            while(true){
+                if(operators.top()=="("){
+                    operators.pop();
+                    break;
+                } 
+                else{
+                    postfixTokens.push_back(operators.top());
+                    operators.pop();
+                }
+            }
+        }
+        else if(isOperator(token)){
+            while(operatorPrecedence(token)<=operatorPrecedence(operators.top())){
+                postfixTokens.push_back(operators.top());
+                operators.pop();
+                
+            } 
+            operators.push(token);
+        }
+    }
+    return postfixTokens;
 }
