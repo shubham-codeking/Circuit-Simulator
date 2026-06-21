@@ -16,14 +16,14 @@ bool zeroDivisionCheck(const double &quantity){
     }
 }
 
-static bool isOperator(const string &token){
+bool isOperator(const string &token){
     if(token=="+"||token=="||"){
         return true;
     }
     return false;
 }
 
-static bool isOperand(const string &token){
+bool isOperand(const string &token){
     if(token!="("&&token!=")"&&!isOperator(token)){
         return true;
     }
@@ -72,7 +72,6 @@ bool expressionValidator(const string &expression){
     }
     return true;
 }
-
 
 vector<string> tokenizer(string &expression){
     expression = "("+expression+")";
@@ -127,7 +126,6 @@ vector<string> tokenizer(string &expression){
     }
     return tokenArray;
 }
-
 
 bool tokenValidator(const vector<string> &tokens){
     string past = tokens[0];

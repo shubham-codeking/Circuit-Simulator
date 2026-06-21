@@ -2,7 +2,38 @@
 #include <vector>
 #include <string>
 #include "resistors.h"
+#include "utilities.h"
+#include <map>
+#include <stack>
 using namespace std;
+
+static Resistor postfixCalculation(const vector<string> &postfixTokens, const map<string,Resistor> &Resistors){
+    Resistor netResistance("R",0);
+    stack<Resistor> stc;
+    for(string token: postfixTokens){
+        if(isOperand(token)){
+            if(Resistors.contains(token)){
+                stc.push(Resistors.at(token));
+            }
+            else{
+                cout<<"\nResistor not found";
+                netResistance.setResistance(0);
+                return netResistance;
+            }
+        }
+        else{
+            Resistor R1 = stc.top();
+            stc.pop();
+            Resistor R2 = stc.top();
+            stc.pop();
+            if(token=="||") netResistance = R1 | R2;
+            else if(token=="+") netResistance = R1 + R2;
+            stc.push(netResistance);
+        }
+    }
+    netResistance = stc.top();
+    return netResistance;
+}
 
 vector<Resistor> inputResistance(){
     int n;
@@ -58,6 +89,35 @@ void resistanceCalculation(const int &choice){
             break;
         }
         case 3:{
+            resistors=inputResistance();
+            map<string,Resistor> resistorMap;
+            for(Resistor R: resistors){
+                resistorMap[R.getName()]=R;
+            }
+            string expression;
+            cout<<"\nEnter expression: "<<endl;
+            cin.ignore();
+            getline(cin,expression);
+            vector<string> tokens;
+            if(expressionValidator(expression)){
+                tokens = tokenizer(expression);
+            }
+            if(!tokens.empty()){
+                if(tokenValidator(tokens)){
+                    tokens = infixToPostfix(tokens);
+                    //postfix calculation function
+                }
+                else{
+                    cout<<"\nInvalid input\n\n";
+                    break;
+                }
+            }
+            else{
+                cout<<"\nInvalid input\n\n";
+                break;
+            }
+        }
+        case 4:{
             return;
         }
         default:{

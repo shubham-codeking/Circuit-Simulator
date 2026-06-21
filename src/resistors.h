@@ -10,7 +10,10 @@ class Resistor{
     public:
         Resistor(string name, double value);
         double getResistance() const;
+        void setResistance(double value);
         string getName() const;
+        Resistor operator+(const Resistor &other) const;
+        Resistor operator|(const Resistor &other) const;
 };
 
 #endif
