@@ -6,7 +6,7 @@ The long-term goal is to evolve this project from a simple calculator into a mor
 
 ## Current Version
 
-v3.0 – Circuit Fundamentals Calculator With Component-Based Architecture
+v4.0 – Circuit Builder
 
 ### Features
 
@@ -26,7 +26,8 @@ v3.0 – Circuit Fundamentals Calculator With Component-Based Architecture
 
 - Series Resistance
 - Parallel Resistance
-
+- Any combination of series and parallel with syantax: R1+R2||R3
+- + is series and || is parallel
 ---
 
 ## Project Structure
@@ -63,11 +64,13 @@ src/
 - GitHub
 - Version Tags
 - OOPs
+- Maps
+- Stacks
 
 ## Building the Project
 
 Compile:
-g++ *.cpp -o main
+g++ -stdc++23 *.cpp -o main
 
 Run:
 ./main
@@ -77,7 +80,7 @@ Run:
 - [x] V1 - Ohm's Law Calculator
 - [x] V2 - Circuit Fundamentals Calculator
 - [x] V3 - Component-Based Architecture
-- [ ] V4 - Circuit Builder
+- [x] V4 - Circuit Builder
 - [ ] V5 - RC Circuit Simulation
 - [ ] V6 - GUI Interface
 - [ ] V7 - Mini-SPICE Style Simulator
