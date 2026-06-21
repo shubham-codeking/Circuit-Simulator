@@ -8,7 +8,7 @@
 using namespace std;
 
 static Resistor postfixCalculation(const vector<string> &postfixTokens, const map<string,Resistor> &Resistors){
-    Resistor netResistance("R",0);
+    Resistor netResistance;
     stack<Resistor> stc;
     for(string token: postfixTokens){
         if(isOperand(token)){
@@ -16,7 +16,7 @@ static Resistor postfixCalculation(const vector<string> &postfixTokens, const ma
                 stc.push(Resistors.at(token));
             }
             else{
-                cout<<"\nResistor not found";
+                cout<<"\nResistor not found\n\n";
                 netResistance.setResistance(0);
                 return netResistance;
             }
@@ -49,7 +49,7 @@ vector<Resistor> inputResistance(){
             cout<<"\nResistance cannot be negative or zero."<<endl;
             return resistors = {};
         }
-        string name = "R"+char(i);
+        string name = "R"+to_string(i);
         resistors.push_back(Resistor(name,tempResistance));
     }
     return resistors;
@@ -105,16 +105,17 @@ void resistanceCalculation(const int &choice){
             if(!tokens.empty()){
                 if(tokenValidator(tokens)){
                     tokens = infixToPostfix(tokens);
-                    //postfix calculation function
+                    netResistance = postfixCalculation(tokens, resistorMap);
+                    break;
                 }
                 else{
                     cout<<"\nInvalid input\n\n";
-                    break;
+                    return;
                 }
             }
             else{
                 cout<<"\nInvalid input\n\n";
-                break;
+                return;
             }
         }
         case 4:{

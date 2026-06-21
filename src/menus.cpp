@@ -46,7 +46,8 @@ int resistanceMenu(){
     cout<<"======= Circuit Simulator ======="<<endl<<endl;
     cout<<"1. Calculate series resistance"<<endl;
     cout<<"2. Calculate parallel resistance"<<endl;
-    cout<<"3. Return to main menu"<<endl;
+    cout<<"3. Calculate resistance of a circuit expression"<<endl;
+    cout<<"4. Return to main menu"<<endl;
     cout<<"\nEnter your choice: ";
     cin>>choice;
     cout<<endl;

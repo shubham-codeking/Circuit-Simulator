@@ -6,6 +6,10 @@ Resistor::Resistor(string name, double value){
     resistance = value;
     Rname = name;
 }
+Resistor::Resistor(){
+    resistance = 0;
+    Rname = "Temp";
+}
 double Resistor::getResistance() const{
     return resistance;
 }

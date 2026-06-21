@@ -9,6 +9,7 @@ class Resistor{
         string Rname;
     public:
         Resistor(string name, double value);
+        Resistor();
         double getResistance() const;
         void setResistance(double value);
         string getName() const;
