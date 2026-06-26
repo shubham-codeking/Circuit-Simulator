@@ -29,6 +29,10 @@ void ElecQuantity::setValue(double value){
     valid=true;
 }
 
+void ElecQuantity::print(){
+    cout<<qname<<": "<<qvalue<<endl;
+}
+
 void ElecQuantity::input(){
     cout<<"Enter "<<qname<<": ";
     string inp;

@@ -15,6 +15,7 @@ class ElecQuantity{
         bool isKnown() const;
         bool isValid() const;
         void setValue(double value);
+        void print();
         void input();
 };
 
