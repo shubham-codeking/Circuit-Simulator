@@ -7,6 +7,7 @@
 #include "menus.h"
 #include "power.h"
 #include "utilities.h"
+#include "elec_calculation.h"
 using namespace std;
 
 void run(){
@@ -15,18 +16,13 @@ void run(){
         choice = mainMenu();
         switch (choice){
         case 1:
-            choice = ohmsLawMenu();
-            ohmsLawCalculation(choice);
+            elecCalculation();
             break;
         case 2:
-            choice = powerMenu();
-            powerCalculation(choice);
-            break;
-        case 3:
             choice = resistanceMenu();
             resistanceCalculation(choice);
             break;
-        case 4:
+        case 3:
             return;
         default:
             cout<<"Enter valid option!!"<<endl<<endl;
