@@ -9,10 +9,10 @@ static bool ifDoubleEqual(double a, double b){
 }
 
 void elecCalculation(){
-    ElecQuantity resistance("Resistance");
-    ElecQuantity power("Power");
-    ElecQuantity current("Current");
-    ElecQuantity voltage("Voltage");
+    ElecQuantity resistance("Resistance","ohm");
+    ElecQuantity power("Power","W");
+    ElecQuantity current("Current","A");
+    ElecQuantity voltage("Voltage","V");
     array<ElecQuantity*,4> quantities = {&resistance, &power, &current, &voltage};
     cin.ignore();
     int knownCount = 0;

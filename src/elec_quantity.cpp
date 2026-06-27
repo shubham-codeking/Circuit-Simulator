@@ -3,10 +3,11 @@
 #include <vector>
 #include <cctype>
 #include <algorithm>
+#include <unordered_map>
 #include "elec_quantity.h"
 using namespace std;
 
-vector<string> ElecQuantity::tokenizer(string input){
+vector<string> ElecQuantity::tokenizer(const string &input){
     vector<string> tokenList;
     string token = "";
     bool numericToken = true;
@@ -20,7 +21,13 @@ vector<string> ElecQuantity::tokenizer(string input){
                     tokenList.push_back(token);
                 }
                 token="";
-                token+=input[i];
+                if(isalpha(input[i])){
+                    token+=input[i];
+                }
+                else{
+                    tokenList={};
+                    return tokenList;
+                }
                 numericToken=false;
             }
         }
@@ -61,7 +68,37 @@ void ElecQuantity::setValue(double value){
 }
 
 void ElecQuantity::print(){
-    cout<<qname<<": "<<qvalue<<endl;
+    cout<<qname<<": "<<qvalue<<qunit<<endl;
+}
+
+void ElecQuantity::validator(const vector<string> &tokenList){
+    double mainValue, coefficient=1;
+    string unit;
+    static const unordered_map<char,double> coeffMap = {
+        {'k',1e3},{'m',1e-3}
+    };
+    try{
+        size_t pos;
+        mainValue=stod(tokenList[0], &pos);
+        if(pos!=tokenList[0].size()){
+            throw invalid_argument("Error");
+        }
+        if(tokenList.size()==2){
+            unit = tokenList[1];
+            if(coeffMap.contains(unit[0])){
+                coefficient=coeffMap.at(unit[0]);
+                unit.erase(0,1);
+            }
+            if(unit!=qunit){
+                throw invalid_argument("Error");
+            }
+        }
+        this->setValue(mainValue*coefficient);
+    }
+    catch(...){
+        cout<<"\nInvalid Input\n\n";
+        return;
+        }
 }
 
 void ElecQuantity::input(){
@@ -72,11 +109,6 @@ void ElecQuantity::input(){
         valid=true;
     } 
     else{
-        try{
-            setValue(stod(inp));
-        }
-        catch(...){
-            cout<<"\nInvalid input\n\n";
-        } 
+        validator(tokenizer(inp));
     }
 }
