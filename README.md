@@ -6,28 +6,22 @@ The long-term goal is to evolve this project from a simple calculator into a mor
 
 ## Current Version
 
-v4.0 – Circuit Builder
+v4.1 – Circuit Builder 2.0
 
 ### Features
 
-#### Ohm's Law Calculations
+#### Electrical Calculations
 
-- Calculate Resistance
-- Calculate Voltage
-- Calculate Current
-
-#### Power Calculations
-
-- Power using Voltage and Current
-- Power using Current and Resistance
-- Power using Voltage and Resistance
+- Calculate Resistance, Voltage, Power, Current from any combination of two or more known quantities
+- SI units (ohm, V, W, A) are now supported
+- prefixes k(kilo) and m(milli) are now supported
 
 #### Resistance Networks
 
 - Series Resistance
 - Parallel Resistance
-- Any combination of series and parallel with syantax: R1+R2||R3
-- + is series and || is parallel
+- Build arbitrary series/parallel resistor networks using expressions such as: R1+R2||R3
+- "+" is series and "||" is parallel
 ---
 
 ## Project Structure
@@ -38,11 +32,11 @@ src/
 ├── menus.cpp
 ├── menus.h
 │
-├── ohms_law.cpp
-├── ohms_law.h
+├── elec_calculation.cpp
+├── elec_calculation.h
 │
-├── power.cpp
-├── power.h
+├── elec_quantity.cpp
+├── elec_quantity.h
 │
 ├── resistance.cpp
 ├── resistance.h
@@ -58,6 +52,8 @@ src/
 - Functions
 - Header Files
 - Multi-file Projects
+- Strings
+- STL
 - Modular Design
 - Vectors
 - Git
@@ -65,12 +61,15 @@ src/
 - Version Tags
 - OOPs
 - Maps
+- Unordered_maps
 - Stacks
+- Exception Handling
+- Expression Parsing
 
 ## Building the Project
 
 Compile:
-g++ -stdc++23 *.cpp -o main
+g++ -std=c++23 *.cpp -o main
 
 Run:
 ./main
@@ -81,6 +80,8 @@ Run:
 - [x] V2 - Circuit Fundamentals Calculator
 - [x] V3 - Component-Based Architecture
 - [x] V4 - Circuit Builder
+    - [x] V4.1 - Circuit Builder 2.0
+    - [ ] V4.2 - Circuit Builder 3.0
 - [ ] V5 - RC Circuit Simulation
 - [ ] V6 - GUI Interface
 - [ ] V7 - Mini-SPICE Style Simulator
