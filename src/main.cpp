@@ -3,9 +3,7 @@
 #include <string>
 #include "resistors.h"
 #include "resistance.h"
-#include "ohms_law.h"
 #include "menus.h"
-#include "power.h"
 #include "utilities.h"
 #include "elec_calculation.h"
 using namespace std;
