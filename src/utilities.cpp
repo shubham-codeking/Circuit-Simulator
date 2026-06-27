@@ -7,7 +7,7 @@
 using namespace std;
 
 bool zeroDivisionCheck(const double &quantity){
-    if (quantity==0){
+    if (quantity<1e-9){
         cout<<"\nCan't be zero!"<<endl<<endl;
         return true;
     }

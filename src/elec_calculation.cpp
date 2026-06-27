@@ -1,7 +1,12 @@
 #include <iostream>
 #include <cmath>
 #include "elec_quantity.h"
+#include "utilities.h"
 using namespace std;
+
+static bool ifDoubleEqual(double a, double b){
+    return fabs(a-b)<1e-9;
+}
 
 void elecCalculation(){
     ElecQuantity resistance("Resistance");
@@ -19,6 +24,9 @@ void elecCalculation(){
         }
         if(q->isKnown()){
             knownCount++;
+            if(zeroDivisionCheck(q->getValue())){
+                return;
+            }
         }
     }
     if(knownCount<2){
@@ -27,7 +35,7 @@ void elecCalculation(){
     }
     else if(knownCount==2){
         if(resistance.isKnown()&&power.isKnown()){
-            current.setValue(power.getValue()/sqrt(resistance.getValue()));
+            current.setValue(sqrt(power.getValue()/resistance.getValue()));
             voltage.setValue(power.getValue()/current.getValue());
         }
         else if (resistance.isKnown()&&current.isKnown()){
@@ -52,16 +60,16 @@ void elecCalculation(){
         }
     }
     else if(knownCount==3){
-        if(!voltage.isKnown()&&resistance.getValue()*current.getValue()==power.getValue()/current.getValue()){
+        if(!voltage.isKnown()&&ifDoubleEqual(resistance.getValue()*current.getValue(),power.getValue()/current.getValue())){
             voltage.setValue(resistance.getValue()*current.getValue());
         }
-        else if(!current.isKnown()&&voltage.getValue()/resistance.getValue()==power.getValue()/voltage.getValue()){
+        else if(!current.isKnown()&&ifDoubleEqual(voltage.getValue()/resistance.getValue(),power.getValue()/voltage.getValue())){
             current.setValue(voltage.getValue()/resistance.getValue());
         }
-        else if(!power.isKnown()&&voltage.getValue()*current.getValue()==current.getValue()*resistance.getValue()*resistance.getValue()){
+        else if(!power.isKnown()&&ifDoubleEqual(voltage.getValue()*current.getValue(),current.getValue()*current.getValue()*resistance.getValue())){
             power.setValue(voltage.getValue()*current.getValue());
         }
-        else if(!resistance.isKnown()&&voltage.getValue()/current.getValue()==(voltage.getValue()*voltage.getValue())/current.getValue()){
+        else if(!resistance.isKnown()&&ifDoubleEqual(voltage.getValue()/current.getValue(),(voltage.getValue()*voltage.getValue())/power.getValue())){
             resistance.setValue(voltage.getValue()/current.getValue());
         }
         else{
