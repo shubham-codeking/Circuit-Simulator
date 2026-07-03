@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <array>
 #include "resistors.h"
 #include "utilities.h"
 #include <map>
@@ -8,7 +9,7 @@
 using namespace std;
 
 static Resistor postfixCalculation(const vector<string> &postfixTokens, const map<string,Resistor> &Resistors){
-    Resistor netResistance;
+    Resistor netResistance("netResistance");
     stack<Resistor> stc;
     for(string token: postfixTokens){
         if(isOperand(token)){
@@ -76,7 +77,7 @@ Resistor parallelResistance(const vector<Resistor> &resistors){
 
 void resistanceCalculation(const int &choice){
     vector<Resistor> resistors;
-    Resistor netResistance("Net_R",0);
+    Resistor netResistance("Net_R");
     switch(choice){
         case 1:{
             resistors=inputResistance();
@@ -92,7 +93,7 @@ void resistanceCalculation(const int &choice){
             resistors=inputResistance();
             map<string,Resistor> resistorMap;
             for(Resistor R: resistors){
-                resistorMap[R.getName()]=R;
+                resistorMap.insert({R.getName(),R});
             }
             string expression;
             cout<<"\nEnter expression: "<<endl;

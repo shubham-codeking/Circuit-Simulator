@@ -1,6 +1,7 @@
 #ifndef ELEC_QUANTITY_H
 #define ELEC_QUANTITY_H
 #include <vector>
+#include <array>
 #include <string>
 using namespace std;
 

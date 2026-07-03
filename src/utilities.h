@@ -1,6 +1,7 @@
 #ifndef UTILITIES_H
 #define UTILITIES_H
 #include <vector>
+#include <array>
 #include <string>
 using namespace std;
 

@@ -1,6 +1,7 @@
 #ifndef RESISTANCE_H
 #define RESISTANCE_H
 #include <vector>
+#include <array>
 #include "resistors.h"
 using namespace std;
 

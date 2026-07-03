@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+#include <array>
 #include "elec_quantity.h"
 #include "utilities.h"
 using namespace std;

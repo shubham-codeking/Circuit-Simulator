@@ -3,6 +3,7 @@
 #include <vector>
 #include <cctype>
 #include <algorithm>
+#include <array>
 #include <unordered_map>
 #include "elec_quantity.h"
 using namespace std;
