@@ -1,4 +1,5 @@
 #include <string>
+#include <vector>
 #include "components.h"
 #include "node.h"
 using namespace std;
@@ -14,5 +15,21 @@ void Node::setPotential(const double &potential){
 }
 
 void Node::createConnection(Component* component){
-    this->connections[component->getName()] = component;
+    connections[component->getName()] = component;
+}
+
+void Node::removeConnection(Component* component){
+    if(connections.contains(component->getName())){
+        connections.erase(component->getName());
+    }
+}
+
+void Node::disconnectNode(){
+    vector<Component*> toDelete;
+    for(auto& it: connections){
+        toDelete.push_back(it.second);
+    }
+    for(auto& it: toDelete){
+        it->disconnect();
+    }
 }

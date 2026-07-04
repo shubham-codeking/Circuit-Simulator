@@ -16,5 +16,7 @@ public:
     double getPotential() const;
     void setPotential(const double &potential);
     void createConnection(Component* component);
+    void removeConnection(Component* component);
+    void disconnectNode();
 };
 #endif

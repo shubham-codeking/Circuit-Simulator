@@ -4,7 +4,11 @@
 #include "node.h"
 using namespace std;
 
-Component::Component(string name): name(name) {}
+Component::Component(string name):
+    name(name), 
+    n1(nullptr), 
+    n2(nullptr), 
+    status(ConnectionStatus::Disconnected){}
 
 string Component::getName() const{
     return name;
@@ -15,4 +19,15 @@ void Component::connect(Node* n1, Node* n2){
     this->n2=n2;
     n1->createConnection(this);
     n2->createConnection(this);
+    status=ConnectionStatus::Connected;
+}
+
+void Component::disconnect(){
+    status=ConnectionStatus::Disconnected;
+    n1->removeConnection(this);
+    n2->removeConnection(this);
+}
+
+bool Component::isConnected() const{
+    return status==ConnectionStatus::Connected;
 }
