@@ -14,7 +14,7 @@ class Circuit{
     public:
         Circuit(const string &name);
         void addNode(const string &name);
-        void addComponent(const string &expression);
+        void addComponent(const string &type, const string &name, string &value, const string &node1, const string &node2);
         void saveCircuit();
         void deleteNode(const string &name);
         void deleteComponent(const string &name);

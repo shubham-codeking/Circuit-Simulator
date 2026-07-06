@@ -49,7 +49,12 @@ void initializeCircuit(Circuit* circuit){
                         string node1 = tokenList[2];
                         string node2 = tokenList[3];
                         string value = tokenList[4];
-                        //further validation
+                        if(node1==node2){
+                            cout<<"Can't have same nodes\n";
+                        }
+                        else{
+                            circuit->addComponent(type, name, value, node1, node2);
+                        }
                     }
                     else{cout<<"Expected 5 values.\n";}
                 }

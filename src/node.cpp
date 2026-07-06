@@ -6,6 +6,10 @@ using namespace std;
 
 Node::Node(const string &name): name(name), potential(0) {}
 
+string Node::getName() const{
+    return name;
+}
+
 double Node::getPotential() const{
     return potential;
 }

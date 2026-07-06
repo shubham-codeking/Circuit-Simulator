@@ -15,6 +15,7 @@ private:
 public:
     Node(const string &name);
     double getPotential() const;
+    string getName() const;
     void setPotential(const double &potential);
     void createConnection(Component* component);
     void removeConnection(Component* component);
