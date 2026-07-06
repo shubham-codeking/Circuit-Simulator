@@ -23,6 +23,9 @@ void Component::connect(Node* n1, Node* n2){
 }
 
 void Component::disconnect(){
+    if(status==ConnectionStatus::Disconnected){
+        return;
+    }
     status=ConnectionStatus::Disconnected;
     n1->removeConnection(this);
     n2->removeConnection(this);

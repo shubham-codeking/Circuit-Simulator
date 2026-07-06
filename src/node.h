@@ -1,6 +1,7 @@
 #ifndef NODE_H
 #define NODE_H
 #include <string>
+#include <vector>
 #include <unordered_map>
 using namespace std;
 class Component;
@@ -17,6 +18,6 @@ public:
     void setPotential(const double &potential);
     void createConnection(Component* component);
     void removeConnection(Component* component);
-    void disconnectNode();
+    vector<Component*> disconnectNode();
 };
 #endif

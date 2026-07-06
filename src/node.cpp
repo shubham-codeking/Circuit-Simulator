@@ -24,7 +24,7 @@ void Node::removeConnection(Component* component){
     }
 }
 
-void Node::disconnectNode(){
+vector<Component*> Node::disconnectNode(){
     vector<Component*> toDelete;
     for(auto& it: connections){
         toDelete.push_back(it.second);
@@ -32,4 +32,5 @@ void Node::disconnectNode(){
     for(auto& it: toDelete){
         it->disconnect();
     }
+    return toDelete;
 }
