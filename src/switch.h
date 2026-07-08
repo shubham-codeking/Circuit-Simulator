@@ -9,6 +9,7 @@ class Switch: public Component{
         SwitchState state;
     public:
         Switch(string name, SwitchState state);
+        string getValueString() const;
         SwitchState getState() const;
         void toggleSwitch();
 };

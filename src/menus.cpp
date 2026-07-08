@@ -27,3 +27,15 @@ int resistanceMenu(){
     cout<<endl;
     return choice; 
 }
+
+int saveMenu(){
+    int choice;
+    cout<<"You have a circuit save with the same name\n";
+    cout<<"1. Overwrite the file.\n";
+    cout<<"2. Rename this circuit.\n";
+    cout<<"3. Return to previous menu.\n";
+    cout<<"\nEnter your choice: ";
+    cin>>choice;
+    cout<<endl;
+    return choice;
+}

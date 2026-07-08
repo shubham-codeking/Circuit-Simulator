@@ -1,6 +1,6 @@
 #ifndef COMPONENTS_H
 #define COMPONENTS_H
-#include <iostream>
+#include <vector>
 #include <string>
 using namespace std;
 
@@ -10,13 +10,17 @@ class Component
 {
 private:
     string name;
+    string type;
     Node* n1;
     Node* n2;
     ConnectionStatus status;
 
 public:
-    Component(string name);
+    Component(string name, string type);
     string getName() const;
+    string getType() const;
+    virtual string getValueString() const;
+    vector<string> getNodes() const;
     void connect(Node* n1, Node* n2);
     void disconnect();
     bool isConnected() const;

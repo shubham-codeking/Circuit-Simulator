@@ -13,9 +13,11 @@ class Circuit{
         unordered_map<string, Component*> components;
     public:
         Circuit(const string &name);
+        string getName() const;
+        void changeName(const string &rename);
         void addNode(const string &name);
-        void addComponent(const string &type, const string &name, string &value, const string &node1, const string &node2);
-        void saveCircuit();
+        void addComponent(const string &type, const string &name, const string &node1, const string &node2, string &value);
+        void save();
         void deleteNode(const string &name);
         void deleteComponent(const string &name);
 };

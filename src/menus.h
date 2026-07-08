@@ -2,8 +2,7 @@
 #define MENUS_H
 
 int mainMenu();
-int ohmsLawMenu();
-int powerMenu();
+int saveMenu();
 int resistanceMenu();
 
 #endif

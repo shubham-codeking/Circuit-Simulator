@@ -9,6 +9,7 @@ class Battery: public Component{
         double emf;
     public:
         Battery(string name, double value);
+        string getValueString() const;
         double getEMF() const;
 };
 

@@ -3,14 +3,18 @@
 #include <array>
 using namespace std;
 
-Resistor::Resistor(string name, double value): Component(name), resistance(value){}
-Resistor::Resistor(string name): Component(name), resistance(0){}
+Resistor::Resistor(string name, double value): Component(name, "Resistor"), resistance(value){}
+Resistor::Resistor(string name): Component(name, "Resistor"), resistance(0){}
 
 double Resistor::getResistance() const{
     return resistance;
 }
 void Resistor::setResistance(double value){
     resistance=value;
+}
+
+string Resistor::getValueString() const{
+    return to_string(resistance)+"ohm";
 }
 
 Resistor Resistor::operator+(const Resistor &other) const{

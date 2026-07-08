@@ -1,6 +1,8 @@
 #include <unordered_map>
 #include <string>
 #include <vector>
+#include <iostream>
+#include <fstream>
 #include "circuit.h"
 #include "components.h"
 #include "battery.h"
@@ -89,7 +91,7 @@ void Circuit::addNode(const string &name){
     else{cout<<"Node already exists\n";}
 }
 
-void Circuit::addComponent(const string &type, const string &name, string &value, const string &node1, const string &node2){
+void Circuit::addComponent(const string &type, const string &name, const string &node1, const string &node2, string &value){
     if(!nodes.contains(node1)){addNode(node1);}
     if(!nodes.contains(node2)){addNode(node2);}
     if(!components.contains(name)){
@@ -98,6 +100,7 @@ void Circuit::addComponent(const string &type, const string &name, string &value
             if(isValidValue(value, unit)){
                 double SIValue = evaluateValue(value);
                 components.insert({name, new Resistor(name, SIValue)});
+                components.at(name)->connect(nodes.at(node1),nodes.at(node2));
             }
         }
         else if(type=="Battery"){
@@ -105,12 +108,14 @@ void Circuit::addComponent(const string &type, const string &name, string &value
             if(isValidValue(value, unit)){
                 double SIValue = evaluateValue(value);
                 components.insert({name, new Battery(name, SIValue)});
+                components.at(name)->connect(nodes.at(node1),nodes.at(node2));
             }
         }
         else if(type=="Switch"){
             if(value=="ON"){components.insert({name, new Switch(name, SwitchState::Closed)});}
             else if(value=="OFF"){components.insert({name, new Switch(name, SwitchState::Open)});}
             else{cout<<"Switch can only have ON and OFF\n";}
+            components.at(name)->connect(nodes.at(node1),nodes.at(node2));
         }
     }
     else{
@@ -145,4 +150,28 @@ void Circuit::deleteNode(const string &name){
     }   
 }
 
-void Circuit::saveCircuit(){}
+string Circuit::getName() const{
+    return name;
+}
+
+void Circuit::changeName(const string &rename){
+    name = rename;
+}
+
+void Circuit::save(){
+    string path = "circuits/user/"+name+".circuit";
+    ofstream file(path);
+    if(!file){
+        cout << "\nCould not save file.\n\n";
+        return;
+    }
+    file<<name<<endl;
+    for(const auto& it: nodes){file<<"Node "<<it.first<<endl;}
+    for(const auto& it: components){
+        Component* comp = it.second;
+        file<<comp->getType()<<" "<<comp->getName()<<" "<<comp->getNodes()[0]<<" "<<comp->getNodes()[1]<<" "<<comp->getValueString()<<endl;
+    }
+    file<<"Done";
+    file.close();
+    cout<<"\nSuccessfully saved!\n\n";
+}

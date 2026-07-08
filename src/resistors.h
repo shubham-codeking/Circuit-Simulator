@@ -12,6 +12,7 @@ class Resistor: public Component{
         Resistor(string name, double value);
         Resistor(string name);
         double getResistance() const;
+        string getValueString() const;
         void setResistance(double value);
         Resistor operator+(const Resistor &other) const;
         Resistor operator|(const Resistor &other) const;

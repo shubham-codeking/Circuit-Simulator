@@ -1,11 +1,6 @@
 #include <iostream>
-#include <vector>
-#include <string>
-#include <array>
-#include "resistors.h"
 #include "resistance.h"
 #include "menus.h"
-#include "utilities.h"
 #include "elec_calculation.h"
 using namespace std;
 
