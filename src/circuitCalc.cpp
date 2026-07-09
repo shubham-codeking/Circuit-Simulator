@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "circuit.h"
 #include "node.h"
+#include "circuitUtilities.h"
 #include "menus.h"
 #include "components.h"
 #include "resistance.h"
@@ -13,60 +14,6 @@
 #include "switch.h"
 using namespace std;
 
-static vector<string> tokenize(const string &expression){
-    vector<string> tokenList;
-    string token;
-    for(char a: expression){
-        if(a==' ' && !token.empty()){
-            tokenList.push_back(token);
-            token="";
-        }
-        else{token += a;}
-    }
-    if(!token.empty()){tokenList.push_back(token);}
-    return tokenList;
-}
-
-static bool expressionParser(const string &expression, Circuit* circuit){
-    vector<string> tokenList;
-    static const vector<string> validTypes = {"Node", "Resistor", "Battery", "Switch"};
-    tokenList = tokenize(expression);
-    try{
-        if(!tokenList.empty()){
-            string type = tokenList[0];
-            if(find(validTypes.begin(),validTypes.end(),type)!=validTypes.end()){
-                if(type=="Node"){
-                    if(tokenList.size()==2){
-                        string name = tokenList[1];
-                        circuit->addNode(name);
-                    }
-                    else{throw invalid_argument("Node takes only 1 name.\n");}
-                }
-                else{
-                    if(tokenList.size()==5){
-                        string name = tokenList[1];
-                        string node1 = tokenList[2];
-                        string node2 = tokenList[3];
-                        string value = tokenList[4];
-                        if(node1==node2){
-                            throw invalid_argument("Can't have same nodes\n");
-                        }
-                        else{
-                            circuit->addComponent(type, name, node1, node2, value);
-                        }
-                    }
-                    else{throw invalid_argument("Expected 5 values for creating component.\n");}
-                }
-            }
-            else{throw invalid_argument("Not a valid component type!\n");}
-        }
-    }
-    catch(const invalid_argument& error){
-        cout<<error.what();
-        return false;
-    }
-    return true;
-}
 
 Circuit* addCircuit(){
     string circuitName;
@@ -75,11 +22,17 @@ Circuit* addCircuit(){
     cin.ignore();
     Circuit* circuit = new Circuit(circuitName);
     string expression;
+    vector<string> tokenList;
     cout<<"Enter all Nodes and Components(type 'Done' to finish)\n";
     while(true){
         getline(cin, expression);
         if (expression=="Done"){break;}
-        expressionParser(expression, circuit);
+        else{
+            tokenList = tokenize(expression);
+            if(expressionValidator(tokenList, circuit, true)){
+                executeExpression(tokenList, circuit);
+            }
+        }
     }
     return  circuit;
 }
@@ -128,12 +81,19 @@ Circuit* loadCircuit(){
         getline(file, name);
         Circuit* newCircuit = new Circuit(name);
         string expression;
+        vector<string> tokenList;
         while(getline(file, expression)){
             if (expression=="Done"){break;}
-            if(!expressionParser(expression, newCircuit)){
-                delete newCircuit;
-                cout<<"\nCircuit can't be loaded.\nSave file corrupted.\n\n";
-                return nullptr;
+            else{
+                tokenList = tokenize(expression);
+                if(expressionValidator(tokenList, newCircuit)){
+                    executeExpression(tokenList, newCircuit);
+                }
+                else{
+                    delete newCircuit;
+                    cout<<"\nCircuit can't be loaded.\nSave file corrupted.\n\n";
+                    return nullptr;
+                }
             }
         }
         cout<<"\n"<<name<<" circuit loaded succesfully!\n\n";
@@ -144,3 +104,36 @@ Circuit* loadCircuit(){
         return nullptr;
     }
 }
+
+void modifyCircuit(Circuit* currentCircuit){
+    cout<<"Enter expression: \n";
+    string expression;
+    cin.ignore();
+    getline(cin, expression);
+    vector<string> tokenList = tokenize(expression);
+    if(!tokenList.empty()){
+        string keyword = tokenList[0];
+        if(keyword=="toggle"){
+            // toggle switch
+        }
+        else if(keyword=="add"){
+            // add node or component
+        }
+        else if(keyword=="remove"){
+            // remove node or component
+        }
+        else if(keyword=="update"){
+            // update node or component
+        }
+        else if(keyword=="cancel"){
+            return;
+        }
+        else{
+            cout<<"Enter a valid keyword";
+        }
+    }
+    else{
+        cout<<"Please enter a expression.\n";
+        return;
+    }
+} 

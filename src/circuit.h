@@ -14,6 +14,8 @@ class Circuit{
     public:
         Circuit(const string &name);
         string getName() const;
+        bool hasNode(const string &name);
+        bool hasComponent(const string &name);
         void changeName(const string &rename);
         void addNode(const string &name);
         void addComponent(const string &type, const string &name, const string &node1, const string &node2, string &value);
