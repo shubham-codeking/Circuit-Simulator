@@ -108,22 +108,40 @@ Circuit* loadCircuit(){
 void modifyCircuit(Circuit* currentCircuit){
     cout<<"Enter expression: \n";
     string expression;
-    cin.ignore();
     getline(cin, expression);
     vector<string> tokenList = tokenize(expression);
     if(!tokenList.empty()){
         string keyword = tokenList[0];
-        if(keyword=="toggle"){
-            // toggle switch
+        tokenList.erase(tokenList.begin());
+        if(keyword=="toggle"&&tokenList.size()==1){
+            string name = tokenList[0];
+            currentCircuit->toggle(name);
         }
-        else if(keyword=="add"){
-            // add node or component
+        else if(keyword=="add"&&tokenList.size()>1){
+            if(expressionValidator(tokenList, currentCircuit, true)){
+                executeExpression(tokenList, currentCircuit);
+            }
         }
-        else if(keyword=="remove"){
-            // remove node or component
+        else if(keyword=="remove"&&tokenList.size()==1){
+            string name = tokenList[0];
+            if(currentCircuit->hasNode(name)){
+                currentCircuit->deleteNode(name);
+            }
+            else if(currentCircuit->hasComponent(name)){
+                currentCircuit->deleteComponent(name);
+            }
+            else{
+                cout<<name<<" does not exist!";
+            }
         }
         else if(keyword=="update"){
-            // update node or component
+            if(tokenList.size()==5){
+                string name = tokenList[1];
+                if(expressionValidator(tokenList, currentCircuit, true)&&currentCircuit->hasComponent(name)){
+                    currentCircuit->deleteComponent(name);
+                    executeExpression(tokenList, currentCircuit);
+                }
+            }
         }
         else if(keyword=="cancel"){
             return;
@@ -133,7 +151,7 @@ void modifyCircuit(Circuit* currentCircuit){
         }
     }
     else{
-        cout<<"Please enter a expression.\n";
+        cout<<"Please enter a valid expression.\n";
         return;
     }
-} 
+}

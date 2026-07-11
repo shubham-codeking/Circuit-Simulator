@@ -93,3 +93,19 @@ void Circuit::save(){
     file.close();
     cout<<"\nSuccessfully saved!\n\n";
 }
+
+
+void Circuit::toggle(const string &name){
+    if(hasComponent(name)){
+        Component* comp = components.at(name);
+        if(comp->getType()=="Switch"){
+            static_cast<Switch*>(comp)->toggleSwitch(); 
+        }
+        else{
+            cout<<name<<" is not a Switch!\n";
+        }
+    }
+    else{
+        cout<<"Switch "<<name<<" doesn't exist\n";
+    }
+}

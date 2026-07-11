@@ -22,6 +22,7 @@ class Circuit{
         void save();
         void deleteNode(const string &name);
         void deleteComponent(const string &name);
+        void toggle(const string &name);
 };
 
 #endif
