@@ -15,6 +15,11 @@ string Component::getName() const{
     return name;
 }
 
+Node* Component::getOtherNode(Node* current) const{
+    if(n1==current){return n2;}
+    else if(n2==current){return n1;}
+}
+
 string Component::getType() const{
     return type;
 }

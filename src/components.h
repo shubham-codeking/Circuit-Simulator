@@ -20,6 +20,7 @@ public:
     string getName() const;
     string getType() const;
     virtual string getValueString() const;
+    Node* getOtherNode(Node* current) const;
     vector<string> getNodes() const;
     void connect(Node* n1, Node* n2);
     void disconnect();

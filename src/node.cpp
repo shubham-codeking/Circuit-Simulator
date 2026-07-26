@@ -1,4 +1,5 @@
 #include <string>
+#include <unordered_map>
 #include <vector>
 #include "components.h"
 #include "node.h"
@@ -12,6 +13,14 @@ string Node::getName() const{
 
 double Node::getPotential() const{
     return potential;
+}
+
+unordered_map<string, Component*> Node::getConnections() const{
+    return connections;
+}
+
+int Node::getDegree() const{
+    return connections.size();
 }
 
 void Node::setPotential(const double &potential){

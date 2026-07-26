@@ -3,6 +3,9 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <algorithm>
+#include <memory>
+#include <set>
 #include "circuit.h"
 #include "components.h"
 #include "battery.h"
@@ -10,6 +13,28 @@
 #include "switch.h"
 #include "node.h"
 using namespace std;
+
+static bool isPossibleDFS(Node* current, Node* target, set<Node*> &visited){
+    if(current==target){
+        return true;
+    }
+    visited.insert(current);
+    for(auto& it: current->getConnections()){
+        Component* comp = it.second;
+        Node* next = comp->getOtherNode(current);
+        if(!visited.contains(next)){
+            if(isPossibleDFS(next, target, visited)){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+bool Circuit::hasPath(Node* start, Node* end){
+    set<Node*> visited;
+    return isPossibleDFS(start, end, visited);
+}
 
 Circuit::Circuit(const string &name):name(name){}
 
@@ -21,7 +46,7 @@ void Circuit::addNode(const string &name){
     if(!hasNode(name)){nodes.insert({name, new Node(name)});}
 }
 
-void Circuit::addComponent(const string &type, const string &name, const string &node1, const string &node2, string &value){
+void Circuit::addComponent(const string &type, const string &name, const string &node1, const string &node2, const string &value){
     addNode(node1);
     addNode(node2);
     if(type=="Resistor"){
@@ -108,4 +133,19 @@ void Circuit::toggle(const string &name){
     else{
         cout<<"Switch "<<name<<" doesn't exist\n";
     }
+}
+
+unique_ptr<Circuit> Circuit::copy(const string &newName) const{
+    auto copy = make_unique<Circuit>(newName);
+    for(auto it: nodes){
+        copy->addNode(it.first);
+    }
+    for(auto it: components){
+        copy->addComponent(it.second->getType(),
+        it.first,
+        it.second->getNodes()[0],
+        it.second->getNodes()[1],
+        it.second->getValueString());
+    }
+    return copy;
 }

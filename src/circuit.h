@@ -1,5 +1,6 @@
 #include <unordered_map>
 #include <string>
+#include <memory>
 #ifndef CIRCUIT_H
 #define CIRCUIT_H
 using namespace std;
@@ -18,11 +19,13 @@ class Circuit{
         bool hasComponent(const string &name);
         void changeName(const string &rename);
         void addNode(const string &name);
-        void addComponent(const string &type, const string &name, const string &node1, const string &node2, string &value);
+        void addComponent(const string &type, const string &name, const string &node1, const string &node2, const string &value);
         void save();
+        unique_ptr<Circuit> copy(const string &newName) const;
         void deleteNode(const string &name);
         void deleteComponent(const string &name);
         void toggle(const string &name);
+        bool hasPath(Node* start, Node* end);
 };
 
 #endif

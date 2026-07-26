@@ -19,6 +19,8 @@ public:
     void setPotential(const double &potential);
     void createConnection(Component* component);
     void removeConnection(Component* component);
+    int getDegree() const;
     vector<Component*> disconnectNode();
+    unordered_map<string, Component*> getConnections() const;
 };
 #endif

@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <unordered_set>
 #include <iostream>
+#include <memory>
 #include <algorithm>
 #include "circuitUtilities.h"
 #include "circuit.h"
@@ -19,7 +20,6 @@ struct Expression
     string node2;
     string value;
 };
-
 
 vector<string> tokenize(const string &expression){
     vector<string> tokenList;
@@ -165,4 +165,10 @@ void executeExpression(const vector<string> &tokenList, Circuit* currentCircuit)
         }
         currentCircuit->addComponent(exp.type, exp.name, exp.node1, exp.node2, exp.value);
     }
+}
+
+unique_ptr<Circuit> optimizer(Circuit* currentCircuit){
+    auto optimizedCircuit = currentCircuit->copy("optimized_"+currentCircuit->getName());
+    
+    return optimizedCircuit;
 }
