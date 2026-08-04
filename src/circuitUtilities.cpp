@@ -6,11 +6,28 @@
 #include <memory>
 #include <algorithm>
 #include "circuitUtilities.h"
+#include "components.h"
 #include "circuit.h"
+#include "node.h"
 using namespace std;
 
 static const unordered_set<string> validTypes = {"Node", "Resistor", "Battery", "Switch"};
 static const unordered_map<char,double> coeffMap = {{'k',1e3},{'m',1e-3}};
+
+static bool isSeriesNode(Node* N){
+    return N->getDegree()==2;
+}
+
+static void seriesOptimizer(Circuit* currentCircuit){
+    // I need to traverse the nodes of the circuit.
+    // Need to figure out how equivalent components will be named and differenciated from the original while still 
+    // keeping the original data intact !
+}
+
+static void parallelOptimizer(Circuit* currentCircuit){
+    // I need to traverse the components of the circuit.
+    // Need to define resistance for batteries to include them in circuit
+}
 
 struct Expression
 {
@@ -165,10 +182,4 @@ void executeExpression(const vector<string> &tokenList, Circuit* currentCircuit)
         }
         currentCircuit->addComponent(exp.type, exp.name, exp.node1, exp.node2, exp.value);
     }
-}
-
-unique_ptr<Circuit> optimizer(Circuit* currentCircuit){
-    auto optimizedCircuit = currentCircuit->copy("optimized_"+currentCircuit->getName());
-    
-    return optimizedCircuit;
 }

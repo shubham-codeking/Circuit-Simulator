@@ -8,6 +8,7 @@
 #include <set>
 #include "circuit.h"
 #include "components.h"
+#include "shadowCircuit.h"
 #include "battery.h"
 #include "resistors.h"
 #include "switch.h"
@@ -135,17 +136,17 @@ void Circuit::toggle(const string &name){
     }
 }
 
-unique_ptr<Circuit> Circuit::copy(const string &newName) const{
-    auto copy = make_unique<Circuit>(newName);
-    for(auto it: nodes){
-        copy->addNode(it.first);
+unique_ptr<ShadowCircuit> Circuit::shadow() const{
+    auto shadow = make_unique<ShadowCircuit>();
+    for(const auto& [name, node]: nodes){
+        shadow->addNode(name);
     }
-    for(auto it: components){
-        copy->addComponent(it.second->getType(),
-        it.first,
-        it.second->getNodes()[0],
-        it.second->getNodes()[1],
-        it.second->getValueString());
+    for(const auto& [name, comp]: components){
+        shadow->addComponent(comp->getType(),
+        name,
+        comp->getNodes()[0],
+        comp->getNodes()[1],
+        comp->getValueString());
     }
-    return copy;
+    return shadow;
 }

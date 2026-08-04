@@ -3,6 +3,7 @@
 #include <memory>
 #ifndef CIRCUIT_H
 #define CIRCUIT_H
+#include "shadowCircuit.h"
 using namespace std;
 
 class Node;
@@ -21,7 +22,7 @@ class Circuit{
         void addNode(const string &name);
         void addComponent(const string &type, const string &name, const string &node1, const string &node2, const string &value);
         void save();
-        unique_ptr<Circuit> copy(const string &newName) const;
+        unique_ptr<ShadowCircuit> shadow() const;
         void deleteNode(const string &name);
         void deleteComponent(const string &name);
         void toggle(const string &name);
