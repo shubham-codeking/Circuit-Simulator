@@ -6,11 +6,14 @@
 #include "circuit.h"
 
 class ShadowNode : public Node{
+    private:
+        pair<Node*, Node*> originals;
+    public:
+        ShadowNode(Node* A, Node* B);
 };
 
 class ShadowResistor: public Component{
     private:
-        string name;
         double resistance;
         vector<Resistor*> originals;
     public:     

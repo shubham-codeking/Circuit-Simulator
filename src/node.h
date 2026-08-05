@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include "shadowCircuit.h"
 using namespace std;
 class Component;
 
@@ -12,6 +13,7 @@ private:
     string name;
     double potential;
     unordered_map<string, Component*> connections;
+    ShadowNode* shadow = nullptr;
 public:
     Node(const string &name);
     double getPotential() const;
@@ -21,6 +23,7 @@ public:
     void removeConnection(Component* component);
     int getDegree() const;
     vector<Component*> disconnectNode();
+    void setShadow(ShadowNode* shadow);
     unordered_map<string, Component*> getConnections() const;
 };
 #endif
