@@ -3,7 +3,7 @@
 #include <array>
 using namespace std;
 
-Resistor::Resistor(string name, double value): Component(name, "Resistor"), resistance(value){}
+Resistor::Resistor(string name, double value, const string& type = "Resistor"): Component(name, type), resistance(value){}
 Resistor::Resistor(string name): Component(name, "Resistor"), resistance(0){}
 
 double Resistor::getResistance() const{

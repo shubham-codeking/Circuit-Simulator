@@ -9,7 +9,7 @@ class Resistor: public Component{
     private:
         double resistance;
     public:
-        Resistor(string name, double value);
+        Resistor(string name, double value, const string& type = "Resistor");
         Resistor(string name);
         double getResistance() const;
         string getValueString() const;

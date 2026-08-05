@@ -2,7 +2,7 @@
 #include "battery.h"
 #include "switch.h"
 
-ShadowNode::ShadowNode(Node* A, Node* B): Node(A->getName()+B->getName()+"shadow"), originals({A, B}){
+ShadowNode::ShadowNode(const string &name, Node* A, Node* B): Node(name), originals({A, B}){
     for(const auto& [name, comp]: A->getConnections()){
         this->createConnection(comp);
     }
@@ -11,41 +11,47 @@ ShadowNode::ShadowNode(Node* A, Node* B): Node(A->getName()+B->getName()+"shadow
     }
 }
 
-ShadowResistor::ShadowResistor(string name, double value): Component(name, "ShadowResistor"), resistance(value){}
 
-double ShadowResistor::getValue() const{
-    return resistance;
-}
+ShadowResistor::ShadowResistor(string name, double value, vector<Resistor*> originals): 
+    Resistor(name, value, "ShadowResistor"), originals(originals){}
 
-void ShadowResistor::setValue(const double &newVal){
-    resistance = newVal;
-}
 
 ShadowCircuit::ShadowCircuit(){
 }
 
 void ShadowCircuit::addNode(const string& name){
-    if(!nodes.contains(name)){nodes.insert({name, nodes.at(name)});}
+    if(!currentNodes.contains(name)){currentNodes.insert({name, currentNodes.at(name)});}
 }
 
 void ShadowCircuit::addComponent(const string &type, const string &name, const string &node1, const string &node2, const string &value){
-    Node* A = nodes.at(node1);
-    Node* B = nodes.at(node2);
+    Node* A = currentNodes.at(node1);
+    Node* B = currentNodes.at(node2);
     if(type=="Resistor"){
         double SIValue = stod(value);
         Resistor* comp = new Resistor(name, SIValue);
-        components.insert({name, comp});
+        currentComponents.insert({name, comp});
         comp->connect(A,B);
     }
     else if(type=="Battery"){
         double SIValue = stod(value);
         Battery* comp = new Battery(name, SIValue);
-        components.insert({name, comp});
+        currentComponents.insert({name, comp});
         comp->connect(A, B);
     }
     else if(type=="Switch" && value=="ON"){
-       ShadowNode* newNode = new ShadowNode(A, B);
-       A->setShadow(newNode);
-       B->setShadow(newNode);
+        string newName = generateShadowName();
+        ShadowNode* newNode = new ShadowNode(newName, A, B);
+        currentNodes.erase(node1);
+        currentNodes.erase(node2);
+        currentNodes.insert({newNode->getName(), newNode});
+        A->setShadow(newNode);
+        B->setShadow(newNode);
     }
+}
+
+string ShadowCircuit::generateShadowName(){
+    string name;
+    do{name = "__shadow_S" + to_string(counter++);}
+    while (currentNodes.contains(name) || currentComponents.contains(name));
+    return name;
 }

@@ -9,25 +9,23 @@ class ShadowNode : public Node{
     private:
         pair<Node*, Node*> originals;
     public:
-        ShadowNode(Node* A, Node* B);
+        ShadowNode(const string &name, Node* A, Node* B);
 };
 
-class ShadowResistor: public Component{
-    private:
-        double resistance;
+class ShadowResistor: public Resistor{
+    public:
         vector<Resistor*> originals;
-    public:     
-        ShadowResistor(string name, double value);
-        double getValue() const;
-        void setValue(const double &newVal);
-
+        ShadowResistor(string name, double value, vector<Resistor*> originals);
 };
 
 class ShadowCircuit{
+    private:
+        int counter = 0;
     public:
         ShadowCircuit();
-        unordered_map<string, Node*> nodes;
-        unordered_map<string, Component*> components;
+        string generateShadowName();
+        unordered_map<string, Node*> currentNodes;
+        unordered_map<string, Component*> currentComponents;
         void addNode(const string &name);
         void addComponent(const string &type, const string &name, const string &node1, const string &node2, const string &value);
 };
