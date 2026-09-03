@@ -4,6 +4,7 @@ void optimize(ShadowCircuit* circuit){
     bool changed = true;
     while(changed){
         changed = false;
+        changed |= removeDanglingBranches(circuit);
         changed |= seriesOptimizer(circuit);
         changed |= parallelOptimizer(circuit);
     }
@@ -36,7 +37,7 @@ static bool seriesOptimizer(ShadowCircuit* currentCircuit){
                 vector<Resistor*> originals;
                 findSeriesOriginals(comp1, value, originals);
                 findSeriesOriginals(comp2, value, originals);
-                ShadowResistor* newRes = new ShadowResistor(currentCircuit->generateShadowName(), value, originals);
+                ShadowResistor* newRes = new ShadowResistor(currentCircuit->generateShadowName(), value, originals, ShadowType::series);
                 currentCircuit->currentComponents.insert({newRes->getName() , newRes});
                 newRes->connect(comp1->getOtherNode(node), comp2->getOtherNode(node));
                 comp1->disconnect();
@@ -72,7 +73,7 @@ static bool parallelOptimizer(ShadowCircuit* currentCircuit){
                     resistor->disconnect();
                     currentCircuit->currentComponents.erase(resistor->getName());
                 }
-                ShadowResistor* parallel = new ShadowResistor(currentCircuit->generateShadowName(), value, resistors);
+                ShadowResistor* parallel = new ShadowResistor(currentCircuit->generateShadowName(), value, resistors, ShadowType::parallel);
                 parallel->connect(node, otherNode);
                 currentCircuit->currentComponents.insert({parallel->getName(), parallel});
                 changed = true;
@@ -81,4 +82,16 @@ static bool parallelOptimizer(ShadowCircuit* currentCircuit){
         if(changed){break;}
     }
     return changed;
+}
+
+static bool removeDanglingBranches(ShadowCircuit* currentCircuit){
+    for(const auto& [name, node]: currentCircuit->currentNodes){
+        if(node->getDegree()==1){
+            delete node->disconnectNode()[0];
+            currentCircuit->currentNodes.erase(name);
+            delete node;
+            return true;
+        }
+    }
+    return false;
 }

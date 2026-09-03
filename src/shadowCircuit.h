@@ -5,6 +5,10 @@
 #include "components.h"
 #include "circuit.h"
 
+enum class ShadowType{
+    series,
+    parallel
+};
 class ShadowNode : public Node{
     private:
         pair<Node*, Node*> originals;
@@ -15,7 +19,8 @@ class ShadowNode : public Node{
 class ShadowResistor: public Resistor{
     public:
         vector<Resistor*> originals;
-        ShadowResistor(string name, double value, vector<Resistor*> originals);
+        ShadowType type;
+        ShadowResistor(string name, double value, vector<Resistor*> originals, ShadowType type);
 };
 
 class ShadowCircuit{

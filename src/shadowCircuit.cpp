@@ -12,7 +12,7 @@ ShadowNode::ShadowNode(const string &name, Node* A, Node* B): Node(name), origin
 }
 
 
-ShadowResistor::ShadowResistor(string name, double value, vector<Resistor*> originals): 
+ShadowResistor::ShadowResistor(string name, double value, vector<Resistor*> originals, ShadowType type): 
     Resistor(name, value, "ShadowResistor"), originals(originals){}
 
 
