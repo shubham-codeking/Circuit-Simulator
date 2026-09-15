@@ -7,6 +7,11 @@
 *.o
 *.obj
 
+build/
+*.exe
+*.out
+*.o
+
 # Precompiled Headers
 *.gch
 *.pch

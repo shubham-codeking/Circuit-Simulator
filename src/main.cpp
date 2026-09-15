@@ -1,8 +1,7 @@
 #include <iostream>
-#include "resistance.h"
-#include "menus.h"
-#include "elec_calculation.h"
-using namespace std;
+#include "calculations/resistance.h"
+#include "ui/menus.h"
+#include "calculations/elec_calculation.h"
 
 void run(){
     int choice;
@@ -19,7 +18,7 @@ void run(){
         case 3:
             return;
         default:
-            cout<<"Enter valid option!!"<<endl<<endl;
+            std::cout<<"Enter valid option!!\n\n";
             break;
         }
     }
